@@ -1,0 +1,56 @@
+﻿@model SubscriptionModel
+
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+</div>
+<div>
+    <form asp-action="Index" method="post">
+
+
+        <div class="mb-3">
+            <label asp-for="MobileNumber" class="form-label">Mobile Number</label>
+            <input asp-for="MobileNumber" type="text" class="form-control">
+            <span asp-validation-for="MobileNumber" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="PinNumber" class="form-label">Pin Number</label>
+            <input asp-for="PinNumber" type="text" class="form-control">
+            <span asp-validation-for="PinNumber" class="text-danger"></span>
+        </div>
+
+        <div>
+
+            <select asp-for="SubscriptionType" class="form-select" aria-label="Default select example">
+                <option selected>Select subcription type</option>
+                <option value="1">Weekly Notification</option>
+                <option value="2">Monthly Notification</option>
+            </select>
+            <span asp-validation-for="SubscriptionType" class="text-danger"></span>
+
+        </div>
+        <div>
+
+            <select asp-for="Package" class="form-select" aria-label="Default select example">
+                <option selected>Select subcription Package</option>
+                <option value="1">Weekly(Half Package)</option>
+                <option value="2">Weekly(Full Package)</option>
+                <option value="3">Monthly(Half++ Package)</option>
+                <option value="4">Monthly(Full Package)</option>
+                <option value="5">Monthly(Full++ Package))</option>
+            </select>
+            <span asp-validation-for="SubscriptionType" class="text-danger"></span>
+
+        </div>
+
+
+        <div class="d-grid col-6 mx-auto mt-4">
+            <button type="submit" class="btn btn-secondary btn-sm">Submit</button>
+        </div>
+    </form>
+
+</div>
