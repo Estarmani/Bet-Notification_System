@@ -21,6 +21,8 @@ namespace NotificationSystem.Infrastructure.Context
         public DbSet<Subscriber> Subscribers {  get; set; }
         public DbSet<Subscription> Subscriptions { get;set; }
         public DbSet<Voucher> Vouchers { get; set; }
+        public DbSet<SubscriberWallet> SubscriberWallets { get; set; }
+        public DbSet<WalletTransaction> WalletTransactions { get; set; }
         public DbSet<VoucherProduction> VouchersProductions { get; set;}
     }
 }

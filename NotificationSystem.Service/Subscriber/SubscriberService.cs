@@ -38,13 +38,7 @@ public class SubscriberService : ISubscriberService
             Status.IsSuccess = false;
             return Status.Message.FriendlyMessage = "Invalid mobile number";
         }
-        //var isValidMobileNumber = await _Validator.ValidateMobileNumber(subscriber.MobileNumber);
-        //if (isValidMobileNumber == false)
-        //{
-        //    Status.IsSuccess = false;
-        //    return Status.Message.FriendlyMessage = "Invalid mobile number";
-        //}
-
+        
         //Validate pin number
         var isValidPinNumber = await _Validator.ValidatePinNumber(voucher.PinNumber);
         if (isValidPinNumber == false)
@@ -82,56 +76,33 @@ public class SubscriberService : ISubscriberService
         }
        
 
-        //Update Voucher status to used and the number that used it
-        var updatedVoucher = thisPinNumber.UpdateVoucher(voucher.PinNumber, thisSubscriber.MobileNumber);
-        thisSubscriber.CreditWallet(updatedVoucher.Amount, thisSubscriber.SubscriberId);
+        ////Update Voucher status to used and the number that used it
+        //var updatedVoucher = thisPinNumber.UpdateVoucher(voucher.PinNumber, thisSubscriber.MobileNumber);
+        //thisSubscriber.CreditWallet(updatedVoucher.Amount, thisSubscriber.SubscriberId);
 
-        //Mapping packages to their monetry value
-        decimal subscriptionAmount = 0;
-        switch (subscription.Package)
-        {
-            case SubscriptionPackage.WeeklyHalfPackage:
-                subscriptionAmount = WeeklyHalfPackage;
-                break;
-            case SubscriptionPackage.WeeklyFullPackage:
-                subscriptionAmount = WeeklyFullPackage;
-                break;
-            case SubscriptionPackage.MonthlyHalfPlusPackage:
-                subscriptionAmount = MonthlyHalfPlusPackage;
-                break;
-            case SubscriptionPackage.MonthlyFullPackage:
-                subscriptionAmount = MonthlyFullPackage;
-                break;
-            case SubscriptionPackage.MonthlyFullPlusPackage:
-                subscriptionAmount = MonthlyFullPlusPackage;
-                break;
-            default:
-                return Status.Message.FriendlyMessage = "Invalid Subscription type ";
+     
+        ////Calculation for only similar package
+        //int maxSubscriptions = 0;
+        //decimal totalSubscriptionAmount = 0;
 
-        }
+        //if (updatedVoucher.Amount % subscriptionAmount != 0)
+        //{
+        //     maxSubscriptions = (int)(updatedVoucher.Amount / subscriptionAmount);
+        //     totalSubscriptionAmount = maxSubscriptions * subscriptionAmount;
+        //    for (int i = 0; i < maxSubscriptions; i++)
+        //    {
+        //        thisSubscriber.AddSubscription(subscriptionAmount, subscription.SubscriptionType, subscription.Package);
+        //        thisSubscriber.DebitWallet(subscriptionAmount, thisSubscriber.SubscriberId);
+        //    }
+        //}
 
-        //Calculation for only similar package
-        int maxSubscriptions = 0;
-        decimal totalSubscriptionAmount = 0;
-
-        if (updatedVoucher.Amount % subscriptionAmount != 0)
-        {
-             maxSubscriptions = (int)(updatedVoucher.Amount / subscriptionAmount);
-             totalSubscriptionAmount = maxSubscriptions * subscriptionAmount;
-            for (int i = 0; i < maxSubscriptions; i++)
-            {
-                thisSubscriber.AddSubscription(subscriptionAmount, subscription.SubscriptionType, subscription.Package);
-                thisSubscriber.DebitWallet(subscriptionAmount, thisSubscriber.SubscriberId);
-            }
-        }
-
-        maxSubscriptions = (int)(updatedVoucher.Amount / subscriptionAmount);
-        totalSubscriptionAmount = maxSubscriptions * subscriptionAmount;
-        for (int i = 0; i < maxSubscriptions; i++)
-        {
-            thisSubscriber.AddSubscription(subscriptionAmount, subscription.SubscriptionType, subscription.Package);
-            thisSubscriber.DebitWallet(subscriptionAmount, thisSubscriber.SubscriberId);
-        }
+        //maxSubscriptions = (int)(updatedVoucher.Amount / subscriptionAmount);
+        //totalSubscriptionAmount = maxSubscriptions * subscriptionAmount;
+        //for (int i = 0; i < maxSubscriptions; i++)
+        //{
+        //    thisSubscriber.AddSubscription(subscriptionAmount, subscription.SubscriptionType, subscription.Package);
+        //    thisSubscriber.DebitWallet(subscriptionAmount, thisSubscriber.SubscriberId);
+        //}
 
         try
         {
@@ -154,11 +125,4 @@ public class SubscriberService : ISubscriberService
 
 
     }
-
-
-    private decimal WeeklyHalfPackage = 200;
-    private decimal WeeklyFullPackage = 500;
-    private decimal MonthlyHalfPlusPackage = 850;
-    private decimal MonthlyFullPackage = 1000;
-    private decimal MonthlyFullPlusPackage = 1200;
 }
